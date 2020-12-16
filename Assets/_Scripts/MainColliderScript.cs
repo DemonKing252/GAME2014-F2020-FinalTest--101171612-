@@ -22,10 +22,12 @@ public enum State
 
 public class MainColliderScript : MonoBehaviour
 {
+    // Controlled from inspector
     [Header("Factors")]
     [SerializeField]
     float hoverSpeed;
 
+    // Common variables
     private Vector3 originalPos;
     private float time = 0.0f;
     public State state;
@@ -34,6 +36,7 @@ public class MainColliderScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // Store the original location of the platform, because we use a timer and trig to make it hover with an added local position relative to this position <--
         originalPos = transform.position;
     }
     // Synced with the physics engine
@@ -43,6 +46,7 @@ public class MainColliderScript : MonoBehaviour
     }
     private void _Move()
     {
+        // Move relative to hoverspeed per second
         time += Time.deltaTime * hoverSpeed;
         transform.position = originalPos + new Vector3(0.0f, Mathf.Sin(time), 0.0f);
     }
@@ -50,6 +54,7 @@ public class MainColliderScript : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
+            // Trigger to reset the platform in case it goes to zero. Remember that the enter/exit event can't fire if there's a scale of 0, because that means its non-existent!
             isPlayerColliding = true;
         }
     }
@@ -57,6 +62,7 @@ public class MainColliderScript : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
+            // Trigger to reset the platform in case it goes to zero. Remember that the enter/exit event can't fire if there's a scale of 0, because that means its non-existent!
             isPlayerColliding = false;
         }
     }

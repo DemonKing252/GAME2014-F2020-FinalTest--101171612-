@@ -17,6 +17,7 @@ public class TriggerScript : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
+            // Call parent
             transform.parent.GetComponent<PlatformScript>().OnEnter();
         }
     }
@@ -24,6 +25,7 @@ public class TriggerScript : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
+            // Call parent
             transform.parent.GetComponent<PlatformScript>().OnExit();
         }
     }

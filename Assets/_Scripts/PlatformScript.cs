@@ -33,16 +33,18 @@ public class PlatformScript : MonoBehaviour
     }
     private void _CheckStates()
     {
+        // Reset if the scale becomes zero. Since the trigger no longer exists
         if (transform.localScale.x == 0.0f && !transform.parent.GetComponent<MainColliderScript>().isPlayerColliding)
         {
             transform.parent.GetComponent<MainColliderScript>().state = State.Grow;
             grow.Play();
         }
-        
+        // Increase local scale
         if(transform.parent.GetComponent<MainColliderScript>().state == State.Grow)
         {
             transform.localScale += new Vector3(Time.deltaTime * sizeSpeed, 0.0f, 0.0f);
         }
+        // Decrease local scale
         else if (transform.parent.GetComponent<MainColliderScript>().state == State.Shrink)
         {
             transform.localScale -= new Vector3(Time.deltaTime * sizeSpeed, 0.0f, 0.0f);
@@ -51,11 +53,13 @@ public class PlatformScript : MonoBehaviour
     }
     public void OnEnter()
     {
+        // Grow sound
         transform.parent.GetComponent<MainColliderScript>().state = State.Shrink;
         grow.Play();
     }
     public void OnExit()
     {
+        // Shrink sound
         transform.parent.GetComponent<MainColliderScript>().state = State.Grow;
         shrink.Play();
     }
